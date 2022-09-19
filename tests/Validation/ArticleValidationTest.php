@@ -15,7 +15,9 @@ class ArticleValidationTest extends TestCase
         $data = ['title' => '', 'content' => ''];
         $validator = new Validator($trans, $data, $article->rules(), $article->messages());
         $method_name = 'addFailure';
-        echo $validator->messages();
+        $messages = json_decode($validator->messages());
         $this->assertTrue(method_exists($validator, $method_name));
+        $this->assertEquals('Title is required', $messages->{'title'}[0]);
+        $this->assertEquals('Content is required', $messages->{'content'}[0]);
     }
 }
